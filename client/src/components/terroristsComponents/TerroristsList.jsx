@@ -20,24 +20,24 @@ export default function TerroristsList({ terrorists }) {
 
   return (
     <Grid pl={11} pr={11} pt={5} container spacing={6}>
-      {terrorists.map((ter) => (
-        <Grid size={{ xs: 12, md: 6 }} key={`${ter.id}-${ter.name}`}>
-          <StyledCard onClick={() => setOpenId(ter.id)} status={ter.status}>
+      {terrorists.map((terrorist) => (
+        <Grid size={{ xs: 12, md: 6 }} key={`${terrorist.id}-${terrorist.name}`}>
+          <StyledCard onClick={() => setOpenId(terrorist.id)} status={terrorist.status}>
             <CardContent>
               <Typography>
-                <strong>{ter.name}</strong>
+                <strong>{terrorist.name}</strong>
               </Typography>
               <hr />
               <Typography>
-                <strong>{ter.organizationName}</strong> - Threat Level:
-                {ter.threatLevel}
+                <strong>{terrorist.organizationName}</strong> - Threat Level:
+                {terrorist.threatLevel}
               </Typography>
             </CardContent>
           </StyledCard>
 
           <TerroristDialog
-            open={openId === ter.id}
-            terrorist={ter}
+            open={openId === terrorist.id}
+            terrorist={terrorist}
             onClose={() => setOpenId(null)}
           />
         </Grid>

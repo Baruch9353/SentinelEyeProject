@@ -28,7 +28,7 @@ export default function DashboardContent({ organizations, terrorists }) {
         </Typography>
         <Typography fontSize="1.5rem">
           Total Active Terrorists:{" "}
-          {terrorists.filter((terrorist) => terrorist.status !== "Deceased")
+          {terrorists.filter(({status}) => status !== "Deceased")
             .length || 0}
         </Typography>
       </Box>

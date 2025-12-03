@@ -24,8 +24,10 @@ const StyledAppBar = styled(AppBar)({
 });
 
 export default function Layout({ children }) {
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  
   return (
     <>
       <StyledAppBar>

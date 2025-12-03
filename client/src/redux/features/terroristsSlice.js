@@ -14,7 +14,7 @@ export const terroristsSlice = createSlice({
     initialState,
     reducers: {
     },
-    
+
     extraReducers: (builder) => {
         builder
             .addCase(fetchTerrorists.pending, (state) => {
@@ -40,11 +40,18 @@ export const terroristsSlice = createSlice({
             .addCase(fetchUpdateTerrorist.fulfilled, (state, action) => {
                 const updatedTerrorist = action.payload;
                 const index = state.allTerroristsList.findIndex(
-                    (terrorist) => terrorist.id === updatedTerrorist.id
+                    ({id}) => id === updatedTerrorist.id
                 );
                 state.allTerroristsList[index] = updatedTerrorist;
             });
     },
 });
+
+export const selectAllTerrorists = ({ terrorists }) =>
+    terrorists.allTerroristsList;
+export const selectTerroristsLoading = ({ terrorists }) =>
+    terrorists.loading;
+export const selectTerroristsError = ({ terrorists }) =>
+    terrorists.error;
 
 export default terroristsSlice.reducer;

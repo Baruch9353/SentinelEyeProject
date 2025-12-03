@@ -14,9 +14,10 @@ export default function TopPageFilter({
   onChange,
   pathClickAdd,
 }) {
-  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
 
   const handleClickAdd = () => {
     navigate(pathClickAdd);
@@ -26,9 +27,8 @@ export default function TopPageFilter({
     navigate(`/updateOrganization/${org.id}`);
   };
 
-  const filterByOrg = (data) => {
-    return org ? data.filter((ter) => ter.idOfOrganization === org.id) : data;
-  };
+  const filterByOrg = (terrorists) =>
+    org ? terrorists.filter(({idOfOrganization}) => idOfOrganization === org.id) : terrorists;
 
   const fetchSearchAndFilter = async () => {
     const { payload = [] } = await dispatch(fetchFunc({ search }));

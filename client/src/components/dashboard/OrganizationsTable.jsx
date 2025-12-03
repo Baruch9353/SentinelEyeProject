@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import { ORDER, COLUMNS } from "../../constants/tableConsts";
+
 import {
   Table,
   TableBody,
@@ -14,28 +16,28 @@ import {
 export default function OrganizationsTable({ organizations }) {
   const navigate = useNavigate();
 
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("name");
+  const [order, setOrder] = useState(ORDER.ASC);
+  const [orderBy, setOrderBy] = useState(COLUMNS.NAME);
 
   const columns = [
-    { id: "name", label: "Organization" },
-    { id: "activityStart", label: "Activity years" },
-    { id: "threatLevel", label: "Threat level" },
-    { id: "terroristCount", label: "Total terrorists" },
+    { id: COLUMNS.NAME, label: "Organization" },
+    { id: COLUMNS.ACTIVITY_START, label: "Activity years" },
+    { id: COLUMNS.THREAT_LEVEL, label: "Threat level" },
+    { id: COLUMNS.TERRORIST_COUNT, label: "Total terrorists" },
   ];
 
   const handleSort = (column) => {
     if (orderBy === column) {
-      setOrder(order === "asc" ? "desc" : "asc");
+      setOrder(order === ORDER.ASC ? ORDER.DESC : ORDER.ASC);
     } else {
       setOrderBy(column);
-      setOrder("asc");
+      setOrder(ORDER.ASC);
     }
   };
 
-  const sortedOrgs = [...organizations].sort((a, b) => {
-    const result = a[orderBy] > b[orderBy] ? 1 : -1;
-    return order === "asc" ? result : -result;
+  const sortedOrgs = [...organizations].sort((orgA, orgB) => {
+    const result = orgA[orderBy] > orgB[orderBy] ? 1 : -1;
+    return order === ORDER.ASC ? result : -result;
   });
 
   return (
@@ -52,7 +54,7 @@ export default function OrganizationsTable({ organizations }) {
               <TableCell key={col.id}>
                 <TableSortLabel
                   active={orderBy === col.id}
-                  direction={orderBy === col.id ? order : "asc"}
+                  direction={orderBy === col.id ? order : ORDER.ASC}
                   onClick={() => handleSort(col.id)}
                 >
                   <strong>{col.label}</strong>
@@ -76,7 +78,7 @@ export default function OrganizationsTable({ organizations }) {
             >
               {columns.map((col) => (
                 <TableCell key={col.id}>
-                  {col.id === "activityStart"
+                  {col.id === COLUMNS.ACTIVITY_START
                     ? org.activityStart + org.activityEnd
                     : org[col.id]}
                 </TableCell>

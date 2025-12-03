@@ -6,23 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, TextField, Button, MenuItem, Typography } from "@mui/material";
 
 import { fetchAddTerrorist } from "../../redux/api/fetchTerrorists";
+import { selectAllOrganizations } from "../../redux/features/organizationsSlice";
 
-const statuses = ["Active", "Detained", "Deceased", "Unknown"];
-const intelConfidences = ["Low", "Medium", "High"];
+import {
+  ACTIVITY_END_PRESENT,
+  STATUSES,
+  INTEL_CONFIDENCES,
+} from "../../constants/formConsts";
 
 export default function AddTerroristForm() {
   const { orgId } = useParams();
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
-  const { allOrganizationsList } = useSelector((state) => state.organizations);
-
-  const isOrg = orgId
-    ? allOrganizationsList.find((org) => org.id === orgId)
-    : null;
 
   const [feedback, setFeedback] = useState("");
-
   const [formData, setFormData] = useState({
     idOfOrganization: "",
     name: "",
@@ -35,6 +32,11 @@ export default function AddTerroristForm() {
     updatedBy: "",
   });
 
+  const allOrganizationsList = useSelector(selectAllOrganizations);
+  const org = orgId
+    ? allOrganizationsList.find(({ id }) => id === orgId)
+    : null;
+
   useEffect(() => {
     if (orgId) {
       setFormData((prev) => ({ ...prev, idOfOrganization: orgId }));
@@ -42,7 +44,9 @@ export default function AddTerroristForm() {
   }, [orgId]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const {
+      target: { name, value },
+    } = event;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -53,14 +57,16 @@ export default function AddTerroristForm() {
     event.preventDefault();
 
     const selectedOrg = allOrganizationsList.find(
-      (org) => org.id === formData.idOfOrganization
+      ({ id }) => id === formData.idOfOrganization
     );
 
     const terrorist = {
       ...formData,
       activityEnd:
-        formData.activityEnd === "" ? " - Present" : " " + formData.activityEnd,
-      organizationName: selectedOrg?.name,
+        formData.activityEnd === ""
+          ? ACTIVITY_END_PRESENT
+          : " " + formData.activityEnd,
+      organizationName: org?.name || selectedOrg.name,
       lastUpdated: new Date().toLocaleDateString(),
     };
 
@@ -69,7 +75,7 @@ export default function AddTerroristForm() {
       setFeedback("Terrorist added successfully!");
       setTimeout(() => {
         navigate(-1);
-      }, 1500)
+      }, 1500);
     } catch (err) {
       setFeedback("Failed to add terrorist.");
     }
@@ -88,7 +94,7 @@ export default function AddTerroristForm() {
       }}
     >
       <Typography fontSize="2rem" color="#316743ff">
-        Add a new terrorist {orgId && `to ${isOrg?.name} organization`}
+        Add a new terrorist {orgId && `to ${org?.name} organization`}
       </Typography>
 
       {!orgId && (
@@ -100,9 +106,9 @@ export default function AddTerroristForm() {
             value={formData.idOfOrganization}
             onChange={handleChange}
           >
-            {allOrganizationsList.map((org) => (
-              <MenuItem key={org.id} value={org.id}>
-                {org.name}
+            {allOrganizationsList.map(({ id, name }) => (
+              <MenuItem key={id} value={id}>
+                {name}
               </MenuItem>
             ))}
           </TextField>
@@ -135,7 +141,7 @@ export default function AddTerroristForm() {
         onChange={handleChange}
         required
       >
-        {statuses.map((status) => (
+        {STATUSES.map((status) => (
           <MenuItem key={status} value={status}>
             {status}
           </MenuItem>
@@ -147,7 +153,7 @@ export default function AddTerroristForm() {
         value={formData.activityStart}
         onChange={handleChange}
         type="month"
-        label="____From"
+        label="From"
         helperText="Activity start date"
         variant="filled"
         required
@@ -156,11 +162,13 @@ export default function AddTerroristForm() {
       <TextField
         name="activityEnd"
         value={
-          formData.activityEnd === " - Present" ? "" : formData.activityEnd
+          formData.activityEnd === ACTIVITY_END_PRESENT
+            ? ""
+            : formData.activityEnd
         }
         onChange={handleChange}
         type="month"
-        label="____To (optional)"
+        label="To (optional)"
         helperText="Leave empty for Present"
         variant="filled"
       />
@@ -181,7 +189,7 @@ export default function AddTerroristForm() {
         onChange={handleChange}
         required
       >
-        {intelConfidences.map((level) => (
+        {INTEL_CONFIDENCES.map((level) => (
           <MenuItem key={level} value={level}>
             {level}
           </MenuItem>

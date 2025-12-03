@@ -50,12 +50,19 @@ export const organizationSlice = createSlice({
             .addCase(fetchUpdateOrganization.fulfilled, (state, action) => {
                 const updatedOrganization = action.payload;
                 const index = state.allOrganizationsList.findIndex(
-                    (terrorist) => terrorist.id === updatedOrganization.id
+                    ({ id }) => id === updatedOrganization.id
                 );
                 state.allOrganizationsList[index] = updatedOrganization;
             });
     },
 });
+
+export const selectAllOrganizations = ({ organizations }) =>
+    organizations.allOrganizationsList;
+export const selectOrganizationsLoading = ({ organizations }) =>
+    organizations.loading;
+export const selectOrganizationsError = ({ organizations }) =>
+    organizations.error;
 
 export default organizationSlice.reducer;
 export const { setTerroristCount } = organizationSlice.actions;

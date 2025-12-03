@@ -4,7 +4,6 @@ import { styled, Drawer, List, ListItemButton, ListItemText } from "@mui/materia
 
 import SentinelEye from "../../assets/SentinelEye.png";
 
-
 export const Logo = styled("img")({
   height: "5rem",
   padding: "0.8rem",
@@ -27,7 +26,6 @@ const StyledList = styled(List)({
   width: "90%",
   borderRadius: "1rem",
 });
-
 
 export default function AppDrawer({ open, setOpen }) {
   const navigate = useNavigate();

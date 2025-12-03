@@ -1,4 +1,4 @@
-import { styled, Container, Grid, Typography } from "@mui/material";
+import { styled, Container, Grid } from "@mui/material";
 
 import OrganizationCard from "./OrganizationCard";
 

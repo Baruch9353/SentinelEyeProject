@@ -6,12 +6,13 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 
 import { fetchAddOrganization } from "../../redux/api/fetchOrganizations";
 
+import { ACTIVITY_END_PRESENT } from "../../constants/formConsts";
+
 export default function AddOrganizationForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [feedback, setFeedback] = useState("");
-
   const [formData, setFormData] = useState({
     name: "",
     threatLevel: "4",
@@ -21,7 +22,9 @@ export default function AddOrganizationForm() {
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const {
+      target: { name, value },
+    } = event;
 
     setFormData((prev) => ({
       ...prev,
@@ -34,7 +37,9 @@ export default function AddOrganizationForm() {
     const organization = {
       ...formData,
       activityEnd:
-        formData.activityEnd === "" ? " - Present" : formData.activityEnd,
+        formData.activityEnd === ""
+          ? ACTIVITY_END_PRESENT
+          : formData.activityEnd,
     };
 
     try {
@@ -42,7 +47,7 @@ export default function AddOrganizationForm() {
       setFeedback("Organization added successfully!");
       setTimeout(() => {
         navigate(-1);
-      }, 1500)
+      }, 1500);
     } catch (err) {
       setFeedback("Failed to add Organization.");
     }
@@ -87,7 +92,7 @@ export default function AddOrganizationForm() {
         value={formData.activityStart}
         onChange={handleChange}
         type="month"
-        label="____From"
+        label="From"
         helperText="Activity start date"
         variant="filled"
         required
@@ -96,11 +101,13 @@ export default function AddOrganizationForm() {
       <TextField
         name="activityEnd"
         value={
-          formData.activityEnd === " - Present" ? "" : formData.activityEnd
+          formData.activityEnd === ACTIVITY_END_PRESENT
+            ? ""
+            : formData.activityEnd
         }
         onChange={handleChange}
         type="month"
-        label="____To (optional)"
+        label="To (optional)"
         helperText="Leave empty for Present"
         variant="filled"
       />

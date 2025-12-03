@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 import { fetchUpdateOrganization } from "../../redux/api/fetchOrganizations";
+import { selectAllOrganizations } from "../../redux/features/organizationsSlice";
+
+import { ACTIVITY_END_PRESENT } from "../../constants/formConsts";
 
 export default function UpdateOrganizationForm() {
   const { orgId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allOrganizationsList } = useSelector((state) => state.organizations);
-  const org = allOrganizationsList.find((org) => org.id === orgId);
-
   const [feedback, setFeedback] = useState("");
-
   const [formData, setFormData] = useState({
     name: "",
     threatLevel: "4",
@@ -25,6 +22,9 @@ export default function UpdateOrganizationForm() {
     activityEnd: "",
     infoUrl: "",
   });
+
+  const allOrganizationsList = useSelector(selectAllOrganizations);
+  const org = allOrganizationsList.find(({ id }) => id === orgId);
 
   useEffect(() => {
     if (org)
@@ -38,7 +38,9 @@ export default function UpdateOrganizationForm() {
   }, [org]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const {
+      target: { name, value },
+    } = event;
 
     setFormData((prev) => ({
       ...prev,
@@ -52,7 +54,9 @@ export default function UpdateOrganizationForm() {
     const organization = {
       ...formData,
       activityEnd:
-        formData.activityEnd === "" ? " - Present" : formData.activityEnd,
+        formData.activityEnd === ""
+          ? ACTIVITY_END_PRESENT
+          : formData.activityEnd,
       id: orgId,
     };
 
@@ -106,7 +110,7 @@ export default function UpdateOrganizationForm() {
         value={formData.activityStart}
         onChange={handleChange}
         type="month"
-        label="____From"
+        label="From"
         helperText="Activity start date"
         variant="filled"
         required
@@ -115,11 +119,13 @@ export default function UpdateOrganizationForm() {
       <TextField
         name="activityEnd"
         value={
-          formData.activityEnd === " - Present" ? "" : formData.activityEnd
+          formData.activityEnd === ACTIVITY_END_PRESENT
+            ? ""
+            : formData.activityEnd
         }
         onChange={handleChange}
         type="month"
-        label="____To (optional)"
+        label="To (optional)"
         helperText="Leave empty for Present"
         variant="filled"
       />
