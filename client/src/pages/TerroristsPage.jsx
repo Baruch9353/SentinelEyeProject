@@ -13,13 +13,13 @@ import { useAppData } from "../hooks/useAppData.js";
 
 export default function TerroristsPage() {
   const { orgId } = useParams();
-
   const { loading, error, allOrganizationsList, allTerroristsList } = useAppData();
+
+  const [filtered, setFiltered] = useState(allTerroristsList);
+
   const org = orgId
     ? allOrganizationsList?.find((org) => org.id == orgId)
     : null;
-
-  const [filtered, setFiltered] = useState(allTerroristsList);
 
   return (
     <>

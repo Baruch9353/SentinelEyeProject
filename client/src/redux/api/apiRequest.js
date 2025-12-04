@@ -1,6 +1,6 @@
 const baseAPI = "http://localhost:3000";
 
-export default async function apiRequest(endpoint, method = "GET", data = null) {
+export default async function apiRequest(endpoint, method = "GET", data) {
   const options = {
     method,
     headers: { "Content-Type": "application/json" },

@@ -10,7 +10,6 @@ import { setTerroristCount } from "../../redux/features/organizationsSlice";
 
 export default function InitDataApp() {
   const dispatch = useDispatch();
-
   const { allTerroristsList } = useAppData();;
 
   useEffect(() => {

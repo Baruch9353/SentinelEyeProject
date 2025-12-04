@@ -18,6 +18,7 @@ export default function UpdateTerroristForm() {
   const { orgId, id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { allOrganizationsList, allTerroristsList } = useAppData();
 
   const [feedback, setFeedback] = useState("");
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ export default function UpdateTerroristForm() {
     updatedBy: "",
   });
 
-  const { allOrganizationsList, allTerroristsList } = useAppData();
+
   const org = allOrganizationsList.find(({ id }) => id === orgId);
   const terrorist = allTerroristsList?.find(({ id }) => id === id);
 
