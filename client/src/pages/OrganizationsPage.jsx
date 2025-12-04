@@ -5,6 +5,7 @@ import { fetchOrganizations } from "../redux/api/fetchOrganizations.js";
 import StatusData from "../components/initData/StatusData.jsx";
 
 import TopPageFilter from "../components/TopPage/TopPageFilter.jsx";
+
 import OrganizationsList from "../components/organizationsComponents/OrganizationList.jsx";
 
 import { useAppData } from "../hooks/useAppData.js";

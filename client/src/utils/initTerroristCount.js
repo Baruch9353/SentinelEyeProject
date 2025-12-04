@@ -1,4 +1,4 @@
-import { DECEASED } from "../../constants/formConsts";
+import { DECEASED } from "../constants/formConsts";
 
 export function initTerroristCount(organizations, terrorists) {
     return organizations.map(org => ({

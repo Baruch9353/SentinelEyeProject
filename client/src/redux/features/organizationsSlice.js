@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { fetchAddOrganization, fetchOrganizations, fetchUpdateOrganization } from "../api/fetchOrganizations";
 
-import { initTerroristCount } from "../../components/utils/initTerroristCount";
+import { initTerroristCount } from "../../utils/initTerroristCount";
 
 const initialState = {
     organizationsList: [],

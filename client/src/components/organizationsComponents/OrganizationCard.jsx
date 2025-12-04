@@ -10,7 +10,7 @@ import {
 
 import { useAppData } from "../../hooks/useAppData";
 
-import { initTerroristCount } from "../utils/initTerroristCount";
+import { initTerroristCount } from "../../utils/initTerroristCount";
 
 const StyledCard = styled(Card)({
   cursor: "pointer",
