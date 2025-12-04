@@ -8,7 +8,9 @@ import {
   styled,
 } from "@mui/material";
 
-import { useTerroristsCount } from "../../hooks/useTerroristsCount";
+import { useAppData } from "../../hooks/useAppData";
+
+import { initTerroristCount } from "../utils/initTerroristCount";
 
 const StyledCard = styled(Card)({
   cursor: "pointer",
@@ -29,8 +31,9 @@ export const StyledAvatar = styled(Avatar)({
 
 export default function OrganizationCard({ org }) {
   const navigate = useNavigate();
+  const { allTerroristsList } = useAppData();
 
-  const terroristCount = useTerroristsCount(org.id);
+  const terroristCount = initTerroristCount([org], allTerroristsList)[0].terroristCount
 
   return (
     <StyledCard>
