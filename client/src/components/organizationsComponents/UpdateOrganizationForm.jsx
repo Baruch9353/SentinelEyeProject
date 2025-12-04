@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 import { fetchUpdateOrganization } from "../../redux/api/fetchOrganizations";
-import { selectAllOrganizations } from "../../redux/features/organizationsSlice";
+
+import { useAppData } from "../../hooks/useAppData";
 
 import { ACTIVITY_END_PRESENT } from "../../constants/formConsts";
 
@@ -23,7 +24,7 @@ export default function UpdateOrganizationForm() {
     infoUrl: "",
   });
 
-  const allOrganizationsList = useSelector(selectAllOrganizations);
+  const { allOrganizationsList } = useAppData();
   const org = allOrganizationsList.find(({ id }) => id === orgId);
 
   useEffect(() => {

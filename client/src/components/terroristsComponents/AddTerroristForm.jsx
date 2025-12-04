@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Box, TextField, Button, MenuItem, Typography } from "@mui/material";
 
 import { fetchAddTerrorist } from "../../redux/api/fetchTerrorists";
-import { selectAllOrganizations } from "../../redux/features/organizationsSlice";
+
+import { useAppData } from "../../hooks/useAppData";
 
 import {
   ACTIVITY_END_PRESENT,
@@ -32,7 +33,7 @@ export default function AddTerroristForm() {
     updatedBy: "",
   });
 
-  const allOrganizationsList = useSelector(selectAllOrganizations);
+  const { allOrganizationsList } = useAppData();
   const org = orgId
     ? allOrganizationsList.find(({ id }) => id === orgId)
     : null;

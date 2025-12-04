@@ -8,7 +8,7 @@ import {
   styled,
 } from "@mui/material";
 
-import { useTerroristsCount } from "../utils/useTerroristsCount.js";
+import { useTerroristsCount } from "../../hooks/useTerroristsCount";
 
 const StyledCard = styled(Card)({
   cursor: "pointer",

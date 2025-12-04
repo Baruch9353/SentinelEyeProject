@@ -4,15 +4,10 @@ import StatusData from "../components/initData/StatusData.jsx";
 
 import DashboardContent from "../components/dashboard/DashboardContent.jsx";
 
+import { useAppData } from "../hooks/useAppData.js";
+
 export default function DashboardPage() {
-  const { allOrganizationsList } = useSelector((state) => state.organizations);
-  const { allTerroristsList } = useSelector((state) => state.terrorists);
-  const { loading } = useSelector(
-    (state) => state.organizations || state.terrorists
-  );
-  const { error } = useSelector(
-    (state) => state.organizations || state.terrorists
-  );
+  const { allOrganizationsList, allTerroristsList, loading, error } = useAppData();
 
   return (
     <StatusData

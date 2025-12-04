@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { fetchAddOrganization, fetchOrganizations, fetchUpdateOrganization } from "../api/fetchOrganizations";
 
+import { initTerroristCount } from "../../components/utils/initTerroristCount";
+
 const initialState = {
     organizationsList: [],
     allOrganizationsList: [],
@@ -13,15 +15,11 @@ export const organizationSlice = createSlice({
     name: 'organizations',
     initialState,
     reducers: {
-        setTerroristCount(state, action) {
-            const allTerrorists = action.payload;
-
-            state.allOrganizationsList = state.allOrganizationsList.map(org => ({
-                ...org,
-                terroristCount: allTerrorists.filter(
-                    ter => ter.idOfOrganization === org.id && ter.status !== "Deceased"
-                ).length
-            }));
+        setTerroristCount(state, { payload: terrorists }) {
+            state.allOrganizationsList = initTerroristCount(
+                state.allOrganizationsList,
+                terrorists
+            );
         }
     },
 
