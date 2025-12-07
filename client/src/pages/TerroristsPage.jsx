@@ -4,9 +4,7 @@ import { useParams } from "react-router";
 import { fetchTerrorists } from "../redux/api/fetchTerrorists.js";
 
 import StatusData from "../components/initData/StatusData.jsx";
-
 import TopPageFilter from "../components/TopPage/TopPageFilter.jsx";
-
 import TerroristsAccordion from "../components/terroristsComponents/TerroristsList.jsx";
 
 import { useAppData } from "../hooks/useAppData.js";

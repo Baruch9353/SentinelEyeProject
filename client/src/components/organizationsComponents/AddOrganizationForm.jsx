@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
+
+import { FormContainer } from "../formComponents/FormContainer"
+import { FormFeedback } from "../formComponents/FormFeedback";
 
 import { fetchAddOrganization } from "../../redux/api/fetchOrganizations";
 
@@ -54,17 +57,10 @@ export default function AddOrganizationForm() {
   };
 
   return (
-    <Box
-      component="form"
+    <FormContainer
       onSubmit={handleSubmit}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        width: { xs: "85%", md: "50%" },
-        mx: "auto",
-      }}
     >
+      
       <Typography fontSize="2rem" color="#316743ff">
         Add a new organization
       </Typography>
@@ -119,18 +115,13 @@ export default function AddOrganizationForm() {
         onChange={handleChange}
       />
 
-      {feedback && (
-        <Typography
-          sx={{ backgroundColor: " #84d1ed67" }}
-          color={feedback.includes("successfully") ? "green" : "red"}
-        >
-          {feedback}
-        </Typography>
-      )}
+      <FormFeedback
+        message={feedback}
+      />
 
       <Button type="submit" variant="outlined">
         add Organization
       </Button>
-    </Box>
+    </FormContainer>
   );
 }

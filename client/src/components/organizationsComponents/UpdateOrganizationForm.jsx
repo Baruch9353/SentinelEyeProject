@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
+
+import { FormContainer } from "../formComponents/FormContainer"
+import { FormFeedback } from "../formComponents/FormFeedback";
 
 import { fetchUpdateOrganization } from "../../redux/api/fetchOrganizations";
 
@@ -73,17 +76,10 @@ export default function UpdateOrganizationForm() {
   };
 
   return (
-    <Box
-      component="form"
+    <FormContainer
       onSubmit={handleSubmit}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        width: { xs: "85%", md: "50%" },
-        mx: "auto",
-      }}
     >
+      
       <Typography fontSize="2rem" color="#316743ff">
         Update {formData.name} organization
       </Typography>
@@ -138,18 +134,13 @@ export default function UpdateOrganizationForm() {
         onChange={handleChange}
       />
 
-      {feedback && (
-        <Typography
-          sx={{ backgroundColor: " #84d1ed67" }}
-          color={feedback.includes("successfully") ? "green" : "red"}
-        >
-          {feedback}
-        </Typography>
-      )}
+      <FormFeedback
+        message={feedback}
+      />
 
       <Button type="submit" variant="outlined">
         Update Organization
       </Button>
-    </Box>
+    </FormContainer>
   );
 }

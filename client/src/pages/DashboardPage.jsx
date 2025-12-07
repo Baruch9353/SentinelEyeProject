@@ -1,7 +1,4 @@
-import { useSelector } from "react-redux";
-
 import StatusData from "../components/initData/StatusData.jsx";
-
 import DashboardContent from "../components/dashboard/DashboardContent.jsx";
 
 import { useAppData } from "../hooks/useAppData.js";

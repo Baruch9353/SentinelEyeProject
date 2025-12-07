@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { Box, TextField, Button, MenuItem, Typography } from "@mui/material";
+import { TextField, Button, MenuItem, Typography } from "@mui/material";
+
+import { FormContainer } from "../formComponents/FormContainer"
+import { FormFeedback } from "../formComponents/FormFeedback";
 
 import { fetchUpdateTerrorist } from "../../redux/api/fetchTerrorists";
 
@@ -88,17 +91,10 @@ export default function UpdateTerroristForm() {
   };
 
   return (
-    <Box
-      component="form"
+    <FormContainer
       onSubmit={handleSubmit}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        width: { xs: "85%", md: "50%" },
-        mx: "auto",
-      }}
     >
+
       <Typography fontSize="2rem" color="#316743ff">
         Update terrorist - {formData.name}
       </Typography>
@@ -206,18 +202,13 @@ export default function UpdateTerroristForm() {
         required
       />
 
-      {feedback && (
-        <Typography
-          sx={{ backgroundColor: " #84d1ed67" }}
-          color={feedback.includes("successfully") ? "green" : "red"}
-        >
-          {feedback}
-        </Typography>
-      )}
+      <FormFeedback
+        message={feedback}
+      />
 
       <Button type="submit" variant="outlined">
         Update terrorist
       </Button>
-    </Box>
+    </FormContainer>
   );
 }

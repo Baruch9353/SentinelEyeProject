@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-import { ORDER, COLUMNS } from "../../constants/tableConsts";
-
 import {
   Table,
   TableBody,
@@ -12,6 +10,8 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
+
+import { ORDER, COLUMNS } from "../../constants/tableConsts";
 
 export default function OrganizationsTable({ organizations }) {
   const navigate = useNavigate();

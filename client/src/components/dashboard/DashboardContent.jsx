@@ -2,6 +2,8 @@ import { styled, Box, Typography } from "@mui/material";
 
 import OrganizationsTable from "./OrganizationsTable";
 
+import { DECEASED } from "../../constants/formConsts";
+
 const StyledDashboard = styled(Box)({
   color: "#316743",
   display: "flex",
@@ -28,8 +30,7 @@ export default function DashboardContent({ organizations, terrorists }) {
         </Typography>
         <Typography fontSize="1.5rem">
           Total Active Terrorists:{" "}
-          {terrorists.filter(({status}) => status !== "Deceased")
-            .length || 0}
+          {terrorists.filter(({ status }) => status !== DECEASED).length || 0}
         </Typography>
       </Box>
 
