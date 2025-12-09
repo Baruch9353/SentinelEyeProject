@@ -1,0 +1,124 @@
+[
+  {
+    "id": "0",
+    "name": "Hamas",
+    "threatLevel": "5",
+    "activityStart": "1997-01",
+    "activityEnd": " - Present",
+    "image": "/images/0.png"
+  },
+  {
+    "id": "1",
+    "name": "PIJ",
+    "threatLevel": "5",
+    "activityStart": "1988-01",
+    "activityEnd": " - Present",
+    "image": "/images/1.png"
+  },
+  {
+    "id": "2",
+    "name": "Fatah",
+    "threatLevel": "4",
+    "activityStart": "1995-12",
+    "activityEnd": " - Present",
+    "lastUpdated": "20.11.2025",
+    "image": "/images/2.png"
+  },
+  {
+    "id": "3",
+    "name": "Al-Shabab",
+    "threatLevel": "4",
+    "infoUrl": "",
+    "activityStart": "1981-01",
+    "activityEnd": " - Present",
+    "lastUpdated": "20.11.2025",
+    "image": "/images/3.png"
+  },
+  {
+    "id": "4",
+    "name": "JeM",
+    "threatLevel": "5",
+    "activityStart": "2003-01",
+    "activityEnd": " - Present",
+    "image": "/images/4.png"
+  },
+  {
+    "id": "5",
+    "name": "LeT",
+    "threatLevel": "3",
+    "activityStart": "2006-11",
+    "activityEnd": " - Present",
+    "image": "/images/5.png"
+  },
+  {
+    "id": "6",
+    "name": "D-Company",
+    "threatLevel": "5",
+    "activityStart": "1999-09",
+    "activityEnd": " - Present",
+    "image": "/images/6.png"
+  },
+  {
+    "id": "7",
+    "name": "IM",
+    "threatLevel": "4",
+    "activityStart": "2004-10",
+    "activityEnd": " - Present",
+    "image": "/images/7.png"
+  },
+  {
+    "id": "8",
+    "name": "AQIM",
+    "threatLevel": "5",
+    "activityStart": "2011-03",
+    "activityEnd": " - Present",
+    "image": "/images/7.png"
+  },
+  {
+    "id": "9",
+    "name": "Hezbollah",
+    "threatLevel": "4",
+    "activityStart": "2008-08",
+    "activityEnd": " - Present",
+    "image": "/images/9.png"
+  },
+  {
+    "id": "10",
+    "name": "AQAP",
+    "threatLevel": "5",
+    "activityStart": "2000-01",
+    "activityEnd": " - Present",
+    "image": "/images/5.png"
+  },
+  {
+    "id": "11",
+    "name": "KTF",
+    "threatLevel": "4",
+    "activityStart": "2020-10",
+    "activityEnd": " - Present",
+    "image": "/images/11.png"
+  },
+  {
+    "id": "12",
+    "name": "Ansaru",
+    "threatLevel": "4",
+    "activityStart": "2024-11",
+    "activityEnd": " - Present",
+    "image": "/images/12.png"
+  },
+  {
+    "id": "13",
+    "name": "Unknown",
+    "threatLevel": "3",
+    "activityStart": "Unknown",
+    "activityEnd": " - Present"
+  },
+  {
+    "id": "14",
+    "name": "Xiuma",
+    "threatLevel": "5",
+    "activityStart": "2005-11",
+    "activityEnd": " - Present",
+    "infoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Islamic_State_flag.svg/330px-Islamic_State_flag.svg.png"
+  }
+]

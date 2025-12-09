@@ -1,0 +1,57 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+import { createTerrorist, fetchTerrorists, updateTerrorist } from "../api/fetchTerrorists";
+
+const initialState = {
+    searchTerroristsList: [],
+    allTerroristsList: [],
+    loading: false,
+    error: null,
+};
+
+export const terroristsSlice = createSlice({
+    name: "terrorists",
+    initialState,
+    reducers: {
+    },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchTerrorists.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchTerrorists.fulfilled, (state, action) => {
+                state.loading = false;
+                state.searchTerroristsList = action.payload;
+
+                if (!action.meta.arg?.search) {
+                    state.allTerroristsList = action.payload;
+                }
+            })
+            .addCase(fetchTerrorists.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(createTerrorist.fulfilled, (state, action) => {
+                const newTerrorist = action.payload;
+                state.allTerroristsList.push(newTerrorist)
+            })
+            .addCase(updateTerrorist.fulfilled, (state, action) => {
+                const updatedTerrorist = action.payload;
+                const index = state.allTerroristsList.findIndex(
+                    ({ id }) => id === updatedTerrorist.id
+                );
+                state.allTerroristsList[index] = updatedTerrorist;
+            });
+    },
+});
+
+export const selectAllTerrorists = ({ terrorists }) =>
+    terrorists.allTerroristsList;
+export const selectTerroristsLoading = ({ terrorists }) =>
+    terrorists.loading;
+export const selectTerroristsError = ({ terrorists }) =>
+    terrorists.error;
+
+export default terroristsSlice.reducer;
