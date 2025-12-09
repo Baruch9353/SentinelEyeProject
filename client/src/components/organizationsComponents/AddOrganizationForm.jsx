@@ -2,14 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { TextField, Button, Typography } from "@mui/material";
-
-import { FormContainer } from "../formComponents/FormContainer"
-import { FormFeedback } from "../formComponents/FormFeedback";
-
-import { fetchAddOrganization } from "../../redux/api/fetchOrganizations";
+import { createOrganization } from "../../redux/api/fetchOrganizations";
 
 import { ACTIVITY_END_PRESENT } from "../../constants/formConsts";
+
+import { OrganizationFormBase } from "./OrganizationFormBase";
 
 export default function AddOrganizationForm() {
   const dispatch = useDispatch();
@@ -24,104 +21,32 @@ export default function AddOrganizationForm() {
     infoUrl: "",
   });
 
-  const handleChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+
     const organization = {
       ...formData,
       activityEnd:
-        formData.activityEnd === ""
-          ? ACTIVITY_END_PRESENT
-          : formData.activityEnd,
+        formData.activityEnd === "" ? ACTIVITY_END_PRESENT : formData.activityEnd,
     };
 
     try {
-      await dispatch(fetchAddOrganization(organization)).unwrap();
+      dispatch(createOrganization(organization)).unwrap();
       setFeedback("Organization added successfully!");
-      setTimeout(() => {
-        navigate(-1);
-      }, 1500);
-    } catch (err) {
+      setTimeout(() => navigate(-1), 1500);
+    } catch {
       setFeedback("Failed to add Organization.");
     }
   };
 
   return (
-    <FormContainer
+    <OrganizationFormBase
+      title="Add a new organization"
+      submitLabel="Add Organization"
+      formData={formData}
+      setFormData={setFormData}
+      feedback={feedback}
       onSubmit={handleSubmit}
-    >
-      
-      <Typography fontSize="2rem" color="#316743ff">
-        Add a new organization
-      </Typography>
-
-      <TextField
-        name="name"
-        label="Name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-
-      <TextField
-        name="threatLevel"
-        label="Threat Level (1 - 5)"
-        type="number"
-        value={formData.threatLevel}
-        onChange={handleChange}
-        required
-        inputProps={{ min: 1, max: 5 }}
-      />
-
-      <TextField
-        name="activityStart"
-        value={formData.activityStart}
-        onChange={handleChange}
-        type="month"
-        label="From"
-        helperText="Activity start date"
-        variant="filled"
-        required
-      />
-
-      <TextField
-        name="activityEnd"
-        value={
-          formData.activityEnd === ACTIVITY_END_PRESENT
-            ? ""
-            : formData.activityEnd
-        }
-        onChange={handleChange}
-        type="month"
-        label="To (optional)"
-        helperText="Leave empty for Present"
-        variant="filled"
-      />
-
-      <TextField
-        name="infoUrl"
-        label="Image URL (optional)"
-        value={formData.infoUrl}
-        onChange={handleChange}
-      />
-
-      <FormFeedback
-        message={feedback}
-      />
-
-      <Button type="submit" variant="outlined">
-        add Organization
-      </Button>
-    </FormContainer>
+    />
   );
 }

@@ -46,7 +46,7 @@ export default function TerroristDialog({ open, terrorist, onClose }) {
           </DialogTitle>
 
           <DialogContent dividers>
-            {dialogs.map(({label, value}) => (
+            {dialogs.map(({ label, value }) => (
               <Typography key={label}>
                 <strong>{label}:</strong> {value}
               </Typography>

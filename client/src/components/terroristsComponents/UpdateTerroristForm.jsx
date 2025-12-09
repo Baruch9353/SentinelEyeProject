@@ -2,20 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { TextField, Button, MenuItem, Typography } from "@mui/material";
-
-import { FormContainer } from "../formComponents/FormContainer"
-import { FormFeedback } from "../formComponents/FormFeedback";
-
-import { fetchUpdateTerrorist } from "../../redux/api/fetchTerrorists";
+import { updateTerrorist } from "../../redux/api/fetchTerrorists";
 
 import { useAppData } from "../../hooks/useAppData";
 
-import {
-  ACTIVITY_END_PRESENT,
-  STATUSES,
-  INTEL_CONFIDENCES,
-} from "../../constants/formConsts";
+import { ACTIVITY_END_PRESENT } from "../../constants/formConsts";
+
+import { TerroristFormBase } from "./TerroristFormBase";
 
 export default function UpdateTerroristForm() {
   const { orgId, id } = useParams();
@@ -36,12 +29,11 @@ export default function UpdateTerroristForm() {
     updatedBy: "",
   });
 
-
   const org = allOrganizationsList.find(({ id }) => id === orgId);
   const terrorist = allTerroristsList?.find(({ id }) => id === id);
 
   useEffect(() => {
-    if (terrorist)
+    if (terrorist) {
       setFormData({
         idOfOrganization: orgId,
         name: terrorist.name,
@@ -53,162 +45,39 @@ export default function UpdateTerroristForm() {
         intelConfidence: terrorist.intelConfidence,
         updatedBy: terrorist.updatedBy,
       });
+    }
   }, [terrorist]);
 
-  const handleChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const terrorist = {
       ...formData,
       id,
-      activityEnd:
-        formData.activityEnd === ""
-          ? ACTIVITY_END_PRESENT
-          : " " + formData.activityEnd,
+      activityEnd: formData.activityEnd === "" ? ACTIVITY_END_PRESENT : " " + formData.activityEnd,
       organizationName: org?.name,
       lastUpdated: new Date().toLocaleDateString(),
     };
 
     try {
-      await dispatch(fetchUpdateTerrorist(terrorist)).unwrap();
+      dispatch(updateTerrorist(terrorist)).unwrap();
       setFeedback("Terrorist updated successfully!");
-      setTimeout(() => {
-        navigate(-1);
-      }, 1500);
-    } catch (err) {
+      setTimeout(() => navigate(-1), 1500);
+    } catch {
       setFeedback("Failed to update terrorist.");
     }
   };
 
   return (
-    <FormContainer
+    <TerroristFormBase
+      title={`Update terrorist - ${formData.name}`}
+      submitLabel="Update terrorist"
+      formData={formData}
+      setFormData={setFormData}
+      feedback={feedback}
       onSubmit={handleSubmit}
-    >
-
-      <Typography fontSize="2rem" color="#316743ff">
-        Update terrorist - {formData.name}
-      </Typography>
-
-      <TextField
-        select
-        name="idOfOrganization"
-        label="Select organization (optional)"
-        value={formData.idOfOrganization}
-        onChange={handleChange}
-      >
-        {allOrganizationsList.map(({ id, name }) => (
-          <MenuItem key={id} value={id}>
-            {name}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        name="name"
-        label="Name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-
-      <TextField
-        name="threatLevel"
-        label="Threat Level (1 - 5)"
-        type="number"
-        value={formData.threatLevel}
-        onChange={handleChange}
-        required
-        inputProps={{ min: 1, max: 5 }}
-      />
-
-      <TextField
-        select
-        name="status"
-        label="Status"
-        value={formData.status}
-        onChange={handleChange}
-        required
-      >
-        {STATUSES.map((status) => (
-          <MenuItem key={status} value={status}>
-            {status}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        name="activityStart"
-        value={formData.activityStart}
-        onChange={handleChange}
-        type="month"
-        label="From"
-        helperText="Activity start date"
-        variant="filled"
-        required
-      />
-
-      <TextField
-        name="activityEnd"
-        value={
-          formData.activityEnd === ACTIVITY_END_PRESENT
-            ? ""
-            : formData.activityEnd
-        }
-        onChange={handleChange}
-        type="month"
-        label="To (optional)"
-        helperText="Leave empty for Present"
-        variant="filled"
-      />
-
-      <TextField
-        name="intelNote"
-        value={formData.intelNote}
-        label="Intel Note"
-        onChange={handleChange}
-        required
-      />
-
-      <TextField
-        select
-        name="intelConfidence"
-        label="Intel Confidence"
-        value={formData.intelConfidence}
-        onChange={handleChange}
-        required
-      >
-        {INTEL_CONFIDENCES.map((level) => (
-          <MenuItem key={level} value={level}>
-            {level}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        name="updatedBy"
-        label="Updated By"
-        value={formData.updatedBy}
-        onChange={handleChange}
-        required
-      />
-
-      <FormFeedback
-        message={feedback}
-      />
-
-      <Button type="submit" variant="outlined">
-        Update terrorist
-      </Button>
-    </FormContainer>
+      allOrganizationsList={allOrganizationsList}
+      showOrganizationSelect={true}
+    />
   );
 }

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchAddOrganization, fetchOrganizations, fetchUpdateOrganization } from "../api/fetchOrganizations";
+import { createOrganization, fetchOrganizations, updateOrganization } from "../api/fetchOrganizations";
 
 import { initTerroristCount } from "../../utils/initTerroristCount";
 
 const initialState = {
-    organizationsList: [],
+    searchOrganizationsList: [],
     allOrganizationsList: [],
     loading: false,
     error: null,
@@ -31,7 +31,7 @@ export const organizationSlice = createSlice({
             })
             .addCase(fetchOrganizations.fulfilled, (state, action) => {
                 state.loading = false;
-                state.organizationsList = action.payload;
+                state.searchOrganizationsList = action.payload;
 
                 if (!action.meta.arg?.search) {
                     state.allOrganizationsList = action.payload;
@@ -41,11 +41,11 @@ export const organizationSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            .addCase(fetchAddOrganization.fulfilled, (state, action) => {
+            .addCase(createOrganization.fulfilled, (state, action) => {
                 const newOrganization = action.payload;
                 state.allOrganizationsList.push(newOrganization)
             })
-            .addCase(fetchUpdateOrganization.fulfilled, (state, action) => {
+            .addCase(updateOrganization.fulfilled, (state, action) => {
                 const updatedOrganization = action.payload;
                 const index = state.allOrganizationsList.findIndex(
                     ({ id }) => id === updatedOrganization.id

@@ -2,14 +2,16 @@ import { useState } from "react";
 
 import { styled, Grid, Card, CardContent, Typography } from "@mui/material";
 
+import { DECEASED } from "../../constants/formConsts";
+
 import TerroristDialog from "./TerroristDialog";
 
 const StyledCard = styled(Card)(({ status }) => ({
   cursor: "pointer",
   transition: "0.3s",
   "&:hover": { transform: "scale(1.03)" },
-  backgroundColor: status === "Deceased" ? "#fbf2f2ff" : "#c0e5f8ff",
-  color: status === "Deceased" ? "darkred" : "green",
+  backgroundColor: status === DECEASED ? "#fbf2f2ff" : "#c0e5f8ff",
+  color: status === DECEASED ? "darkred" : "green",
   borderRadius: "0.6rem",
   boxShadow: "0 4px 8px rgba(1, 1, 1, 0.7)",
   justifyItems: "center",
@@ -24,13 +26,12 @@ export default function TerroristsList({ terrorists }) {
         <Grid size={{ xs: 12, md: 6 }} key={`${terrorist.id}-${terrorist.name}`}>
           <StyledCard onClick={() => setOpenId(terrorist.id)} status={terrorist.status}>
             <CardContent>
-              <Typography>
-                <strong>{terrorist.name}</strong>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                {terrorist.name}
               </Typography>
               <hr />
-              <Typography>
-                <strong>{terrorist.organizationName}</strong> - Threat Level:
-                {terrorist.threatLevel}
+              <Typography sx={{ fontWeight: 'bold' }}>
+                {terrorist.organizationName} - Threat Level: {terrorist.threatLevel}
               </Typography>
             </CardContent>
           </StyledCard>

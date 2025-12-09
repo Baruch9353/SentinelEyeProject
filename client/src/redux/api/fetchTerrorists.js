@@ -4,31 +4,31 @@ import apiRequest from './apiRequest.js'
 
 export const fetchTerrorists = createAsyncThunk(
     "terrorists/fetchTerrorists",
-    async ({ search = ""} = {}) => {
+    ({ search = "" } = {}) => {
         let url = `terrorists`;
         if (search) {
             url += `/?searchName=${search}`;
         }
-        return await apiRequest(url, "GET");
+        return apiRequest(url, "GET");
     }
 );
 
 export const fetchTerroristById = createAsyncThunk(
     "terrorists/fetchTerroristById",
-    async (id) => await apiRequest("terrorists/getTerroristById", "POST", id)
+    (id) => apiRequest("terrorists/getTerroristById", "POST", id)
 );
 
-export const fetchAddTerrorist = createAsyncThunk(
-    "terrorists/fetchAddTerrorist",
-    async (terrorist) => await apiRequest("terrorists/addTerrorist", "POST", terrorist)
+export const createTerrorist = createAsyncThunk(
+    "terrorists/createTerrorist",
+    (terrorist) => apiRequest("terrorists/addTerrorist", "POST", terrorist)
 );
 
-export const fetchUpdateTerrorist = createAsyncThunk(
-    "terrorists/fetchUpdateTerrorist",
-    async (terrorist) => await apiRequest("terrorists/updateTerrorist", "PUT", terrorist)
+export const updateTerrorist = createAsyncThunk(
+    "terrorists/updateTerrorist",
+    (terrorist) => apiRequest("terrorists/updateTerrorist", "PUT", terrorist)
 );
 
-export const fetchRemoveTerrorist = createAsyncThunk(
-    "terrorists/fetchRemoveTerrorist",
-    async (id) => await apiRequest("terrorists/deleteTerrorist", "DELETE", id)
+export const deleteTerrorist = createAsyncThunk(
+    "terrorists/deleteTerrorist",
+    (id) => apiRequest("terrorists/deleteTerrorist", "DELETE", id)
 );

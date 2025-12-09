@@ -2,33 +2,33 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import apiRequest from './apiRequest.js'
 
-export const  fetchOrganizations = createAsyncThunk(
+export const fetchOrganizations = createAsyncThunk(
     "organizations/fetchOrganizations",
-    async ({ search = ""} = {}) => {
+    ({ search = "" } = {}) => {
         let url = `organizations`;
         if (search) {
             url += `/?searchName=${search}`;
         }
-        return await apiRequest(url, "GET");
+        return apiRequest(url, "GET");
     }
 );
 
 export const fetchOrganizationById = createAsyncThunk(
     "organizations/fetchOrganizationById",
-    async (id) => await apiRequest("organizations/getOrganizationById", "POST", id)
+    (id) => apiRequest("organizations/getOrganizationById", "POST", id)
 );
 
-export const fetchAddOrganization = createAsyncThunk(
-    "organizations/fetchAddOrganization",
-    async (organization) => await apiRequest("organizations/addOrganization", "POST", organization)
+export const createOrganization = createAsyncThunk(
+    "organizations/createOrganization",
+    (organization) => apiRequest("organizations/addOrganization", "POST", organization)
 );
 
-export const fetchUpdateOrganization = createAsyncThunk(
-    "organizations/fetchUpdateOrganization",
-    async (organization) => await apiRequest("organizations/updateOrganization", "PUT", organization)
+export const updateOrganization = createAsyncThunk(
+    "organizations/updateOrganization",
+    (organization) => apiRequest("organizations/updateOrganization", "PUT", organization)
 );
 
-export const fetchRemoveOrganization = createAsyncThunk(
-    "organizations/fetchRemoveOrganization",
-    async (id) => await apiRequest("organizations/deleteOrganization", "DELETE", id)
+export const deleteOrganization = createAsyncThunk(
+    "organizations/deleteOrganization",
+    (id) => apiRequest("organizations/deleteOrganization", "DELETE", id)
 );

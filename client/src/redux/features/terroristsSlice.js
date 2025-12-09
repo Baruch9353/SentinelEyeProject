@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchAddTerrorist, fetchTerrorists, fetchUpdateTerrorist } from "../api/fetchTerrorists";
+import { createTerrorist, fetchTerrorists, updateTerrorist } from "../api/fetchTerrorists";
 
 const initialState = {
-    terroristsList: [],
+    searchTerroristsList: [],
     allTerroristsList: [],
     loading: false,
     error: null,
@@ -23,7 +23,7 @@ export const terroristsSlice = createSlice({
             })
             .addCase(fetchTerrorists.fulfilled, (state, action) => {
                 state.loading = false;
-                state.terroristsList = action.payload;
+                state.searchTerroristsList = action.payload;
 
                 if (!action.meta.arg?.search) {
                     state.allTerroristsList = action.payload;
@@ -33,14 +33,14 @@ export const terroristsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            .addCase(fetchAddTerrorist.fulfilled, (state, action) => {
+            .addCase(createTerrorist.fulfilled, (state, action) => {
                 const newTerrorist = action.payload;
                 state.allTerroristsList.push(newTerrorist)
             })
-            .addCase(fetchUpdateTerrorist.fulfilled, (state, action) => {
+            .addCase(updateTerrorist.fulfilled, (state, action) => {
                 const updatedTerrorist = action.payload;
                 const index = state.allTerroristsList.findIndex(
-                    ({id}) => id === updatedTerrorist.id
+                    ({ id }) => id === updatedTerrorist.id
                 );
                 state.allTerroristsList[index] = updatedTerrorist;
             });

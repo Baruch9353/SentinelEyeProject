@@ -37,6 +37,7 @@ export default function OrganizationsTable({ organizations }) {
 
   const sortedOrgs = [...organizations].sort((orgA, orgB) => {
     const result = orgA[orderBy] > orgB[orderBy] ? 1 : -1;
+    
     return order === ORDER.ASC ? result : -result;
   });
 
