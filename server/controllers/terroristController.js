@@ -1,4 +1,4 @@
-import { getAllTerrorists, getTerroristById, addTerrorist, updateTerrorist, deleteTerrorist } from '../DAL/terroristsDal.js';
+import { getAllTerrorists, getTerroristById, addTerrorist, updateTerrorist, deleteTerrorist } from '../DALsupabase/terroristsDal.js';
 
 export async function getTerroristsHandler(req, res) {
   const { searchName = "" } = req.query;

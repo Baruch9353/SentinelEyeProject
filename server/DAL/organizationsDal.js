@@ -14,7 +14,7 @@ export async function getOrganizationById(id) {
 
 export async function addOrganization(organization) {
     const organizations = await getAllOrganizations();
-    let id = organizations.length > 0 ? Number(organizations[organizations.length - 1].id) + 1 + '' : 1;
+    const id = organizations.length > 0 ? Number(organizations[organizations.length - 1].id) + 1 + '' : 1;
     const newOrganization = { id, ...organization }
     organizations.push(newOrganization);
     await writeFile(dataFilePath, JSON.stringify(organizations, null, 2));

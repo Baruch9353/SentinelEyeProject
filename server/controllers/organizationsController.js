@@ -4,7 +4,7 @@ import {
     addOrganization,
     updateOrganization,
     deleteOrganization
-} from '../DAL/organizationsDal.js';
+} from '../DALsupabase/organizationsDal.js';
 
 export async function getOrganizationsHandler(req, res) {
     const { searchName = "" } = req.query;
